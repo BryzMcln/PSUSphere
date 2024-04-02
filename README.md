@@ -11,9 +11,9 @@
 
 #### John Carl Reyes <br>
 
-#Description
+## Description
 
-*This project is made with Django, Python, and Faker.
-*We installed and imported the modules.
-*Added values to the database for the admin account
-*Added an admin account for the database
+# This project is made with Django, Python, and Faker.
+* We installed and imported the modules.
+* Added values to the database for the admin account
+* Added an admin account for the database
