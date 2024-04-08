@@ -3,12 +3,12 @@
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>{% block title %}PSUSphere{% endblock %}</title>
+	<title>{% block title %}PSUSPhere{% endblock %}</title>
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-	<link rel="stylesheet" href=" {% 'css/ready.css' %}">
-	<link rel="stylesheet" href=" {% 'css/demo.css' %}">
+	<link rel="stylesheet" href="{% static 'css/ready.css' %}">
+	<link rel="stylesheet" href="{% static 'css/demo.css' %}">
 </head>
 <body>
 	<div class="wrapper">
@@ -24,7 +24,7 @@
 			</div>
 			<nav class="navbar navbar-header navbar-expand-lg">
 				<div class="container-fluid">
-
+					
 					<form class="navbar-left navbar-form nav-search mr-md-3" action="">
 						<div class="input-group">
 							<input type="text" placeholder="Search ..." class="form-control">
@@ -64,7 +64,7 @@
 												<span class="block">
 													New user registered
 												</span>
-												<span class="time">5 minutes ago</span>
+												<span class="time">5 minutes ago</span> 
 											</div>
 										</a>
 										<a href="#">
@@ -73,18 +73,18 @@
 												<span class="block">
 													Rahmad commented on Admin
 												</span>
-												<span class="time">12 minutes ago</span>
+												<span class="time">12 minutes ago</span> 
 											</div>
 										</a>
 										<a href="#">
-											<div class="notif-img">
+											<div class="notif-img"> 
 												<img src="assets/img/profile2.jpg" alt="Img Profile">
 											</div>
 											<div class="notif-content">
 												<span class="block">
 													Reza send messages to you
 												</span>
-												<span class="time">12 minutes ago</span>
+												<span class="time">12 minutes ago</span> 
 											</div>
 										</a>
 										<a href="#">
@@ -93,7 +93,7 @@
 												<span class="block">
 													Farrah liked Admin
 												</span>
-												<span class="time">17 minutes ago</span>
+												<span class="time">17 minutes ago</span> 
 											</div>
 										</a>
 									</div>
@@ -145,7 +145,7 @@
 							</a>
 							<div class="clearfix"></div>
 
-							<div class="collapse in" id="collapseExample" aria-expanded="true" style="">
+							<div class="collapse in" id="collapseExample" aria-expanded="true">
 								<ul class="nav">
 									<li>
 										<a href="#profile">
@@ -227,7 +227,6 @@
 			<div class="main-panel">
 				{% block content %}
 				{% endblock %}
-
 				<footer class="footer">
 					<div class="container-fluid">
 						<nav class="pull-left">
@@ -251,7 +250,7 @@
 						</nav>
 						<div class="copyright ml-auto">
 							2018, made with <i class="la la-heart heart text-danger"></i> by <a href="http://www.themekita.com">ThemeKita</a>
-						</div>
+						</div>				
 					</div>
 				</footer>
 			</div>
@@ -267,7 +266,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body text-center">
+				<div class="modal-body text-center">									
 					<p>Currently the pro version of the <b>Ready Dashboard</b> Bootstrap is in progress development</p>
 					<p>
 					<b>We'll let you know when it's done</b></p>
