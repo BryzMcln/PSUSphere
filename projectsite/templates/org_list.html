@@ -9,6 +9,26 @@
             <div class="card-title">List of Organizations</div>
             <div class="card-category">Page Subtitle</div>
           </div>
+          <br>
+              <div class="col-md-12 row">
+                  <div class="col-md-6">
+                    <form action="" class="navbar-left navbar-form nav-search mr-md-3" action="">
+                        <div class="input-group">
+                          <input type="text" placeholder="Search ..." class="form-control">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                  <i class="la la-search search-icon"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="pull-right">
+                        <a href="{% url 'organization-add' %}" class="btn btn-success btn-rounded">Add Organization</a>
+                      </div>
+                  </div>
+              </div>
           <div class="card-body">
             <table class="table table-stripped mt-3">
                 <thead>
@@ -16,6 +36,7 @@
                         <th scope="col">Name</th>
                         <th scope="col">College</th>
                         <th scope="col">Description</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,6 +45,13 @@
                         <td>{{ object.name }}</td>
                         <td>{{ object.college }}</td>
                         <td>{{ object.description }}</td>
+                        <td><a href="organization_list/{{ object.id }}">Edit</a></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" style="text-align: center;">
+                          <p class="text-sm font-weight-bold mb-0">No Records Found</p>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
