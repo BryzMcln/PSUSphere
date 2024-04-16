@@ -7,7 +7,10 @@ from studentorg.forms import OrganizationForm
 from django.urls import reverse_lazy
 from typing import Any
 from django.db.models import Q
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
+@method_decorator(login_required, name='dispatch')
 class HomePageView(ListView):
     model = Organization
     context_object_name = 'home'
