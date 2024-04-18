@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from studentorg.models import Organization, College, Student, Program, OrgMember
-from studentorg.forms import OrganizationForm, CollegesForm
+from studentorg.forms import OrganizationForm, CollegesForm, StudentsForm
 from django.urls import reverse_lazy
 from typing import Any
 from django.db.models import Q
@@ -76,3 +76,35 @@ class CollegeDeleteView(DeleteView):
     model = College
     template_name = "college_del.html"
     success_url = reverse_lazy('colleges-list')
+
+class StudentList(ListView):
+    model = Student
+    context_object_name = 'student'
+    template_name = "students_list.html"
+    paginate_by = 10
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super(StudentList, self).get_queryset(*args, **kwargs)
+        if self.request.GET.get("q") != None:
+            query = self.request.GET.get('q')
+            qs = qs.filter(Q(student_id__icontains=query) |
+            Q(lastname__icontains=query) | Q(firstname__icontains=query) | 
+            Q(middlename__icontains=query) | Q(program__prog_name__icontains=query) )
+        return qs
+
+class StudentCreateView(CreateView):
+    model = Student
+    form_class = StudentsForm
+    template_name = "students_add.html"
+    success_url = reverse_lazy('students-list') 
+    
+class StudentUpdateView(UpdateView):
+    model = Student
+    form_class = StudentsForm
+    template_name = "students_edit.html"
+    success_url = reverse_lazy('students-list') 
+
+class StudentDeleteView(DeleteView):
+    model = Student
+    template_name = "student_del.html"
+    success_url = reverse_lazy('students-list')
