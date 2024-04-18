@@ -2,8 +2,8 @@ from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from studentorg.models import Organization
-from studentorg.forms import OrganizationForm
+from studentorg.models import Organization, College, Student, Program, OrgMember
+from studentorg.forms import OrganizationForm, CollegesForm
 from django.urls import reverse_lazy
 from typing import Any
 from django.db.models import Q
@@ -47,3 +47,32 @@ class OrganizationDeleteView(DeleteView):
     template_name = 'org_del.html'
     success_url = reverse_lazy('organization-list')
 
+class CollegeList(ListView):
+    model = College
+    context_object_name = 'college'
+    template_name = "colleges_list.html"
+    paginate_by = 5
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super(CollegeList, self).get_queryset(*args, **kwargs)
+        if self.request.GET.get("q") != None:
+            query = self.request.GET.get('q')
+            qs = qs.filter(Q(college_name__icontains=query))
+        return qs
+
+class CollegeCreateView(CreateView):
+    model = College
+    form_class = CollegesForm
+    template_name = "college_add.html"
+    success_url = reverse_lazy('colleges-list') 
+    
+class CollegeUpdateView(UpdateView):
+    model = College
+    form_class = CollegesForm
+    template_name = "college_edit.html"
+    success_url = reverse_lazy('colleges-list') 
+
+class CollegeDeleteView(DeleteView):
+    model = College
+    template_name = "college_del.html"
+    success_url = reverse_lazy('colleges-list')
