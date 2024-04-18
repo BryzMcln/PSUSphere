@@ -19,6 +19,8 @@ class HomePageView(ListView):
 class OrganizationList(ListView):
      template_name = 'org_list.html'
      paginate_by = 5
+     model = Organization
+     context_object_name = 'organization'
 
      def get_queryset(self, *args, **kwargs):
          qs = super(OrganizationList, self).get_queryset(*args, **kwargs)
