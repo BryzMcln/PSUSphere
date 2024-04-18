@@ -64,18 +64,18 @@ class CollegeCreateView(CreateView):
     model = College
     form_class = CollegesForm
     template_name = "college_add.html"
-    success_url = reverse_lazy('colleges-list') 
+    success_url = reverse_lazy('college-list') 
     
 class CollegeUpdateView(UpdateView):
     model = College
     form_class = CollegesForm
     template_name = "college_edit.html"
-    success_url = reverse_lazy('colleges-list') 
+    success_url = reverse_lazy('college-list') 
 
 class CollegeDeleteView(DeleteView):
     model = College
     template_name = "college_del.html"
-    success_url = reverse_lazy('colleges-list')
+    success_url = reverse_lazy('college-list')
 
 class StudentList(ListView):
     model = Student
@@ -96,18 +96,18 @@ class StudentCreateView(CreateView):
     model = Student
     form_class = StudentsForm
     template_name = "students_add.html"
-    success_url = reverse_lazy('students-list') 
+    success_url = reverse_lazy('student-list') 
     
 class StudentUpdateView(UpdateView):
     model = Student
     form_class = StudentsForm
     template_name = "students_edit.html"
-    success_url = reverse_lazy('students-list') 
+    success_url = reverse_lazy('student-list') 
 
 class StudentDeleteView(DeleteView):
     model = Student
     template_name = "student_del.html"
-    success_url = reverse_lazy('students-list')
+    success_url = reverse_lazy('student-list')
 
 class ProgramList(ListView):
     model = Program
@@ -127,18 +127,18 @@ class ProgramCreateView(CreateView):
     model = Program
     form_class = ProgramForm
     template_name = "prog_add.html"
-    success_url = reverse_lazy('programs-list') 
+    success_url = reverse_lazy('program-list') 
     
 class ProgramUpdateView(UpdateView):
     model = Program
     form_class = ProgramForm
     template_name = "prog_edit.html"
-    success_url = reverse_lazy('programs-list') 
+    success_url = reverse_lazy('program-list') 
 
 class ProgramDeleteView(DeleteView):
     model = Program
     template_name = "prog_del.html"
-    success_url = reverse_lazy('programs-list')
+    success_url = reverse_lazy('program-list')
 
 class OrgMemList(ListView):
     model = OrgMember
