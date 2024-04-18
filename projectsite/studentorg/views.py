@@ -50,7 +50,7 @@ class OrganizationDeleteView(DeleteView):
 class CollegeList(ListView):
     model = College
     context_object_name = 'college'
-    template_name = "colleges_list.html"
+    template_name = "college_list.html"
     paginate_by = 5
 
     def get_queryset(self, *args, **kwargs):
@@ -64,23 +64,23 @@ class CollegeCreateView(CreateView):
     model = College
     form_class = CollegesForm
     template_name = "college_add.html"
-    success_url = reverse_lazy('college-list') 
+    success_url = reverse_lazy('colleges-list') 
     
 class CollegeUpdateView(UpdateView):
     model = College
     form_class = CollegesForm
     template_name = "college_edit.html"
-    success_url = reverse_lazy('college-list') 
+    success_url = reverse_lazy('colleges-list') 
 
 class CollegeDeleteView(DeleteView):
     model = College
     template_name = "college_del.html"
-    success_url = reverse_lazy('college-list')
+    success_url = reverse_lazy('colleges-list')
 
 class StudentList(ListView):
     model = Student
     context_object_name = 'student'
-    template_name = "students_list.html"
+    template_name = "student_list.html"
     paginate_by = 10
 
     def get_queryset(self, *args, **kwargs):
@@ -95,19 +95,19 @@ class StudentList(ListView):
 class StudentCreateView(CreateView):
     model = Student
     form_class = StudentsForm
-    template_name = "students_add.html"
-    success_url = reverse_lazy('student-list') 
+    template_name = "student_add.html"
+    success_url = reverse_lazy('students-list') 
     
 class StudentUpdateView(UpdateView):
     model = Student
     form_class = StudentsForm
-    template_name = "students_edit.html"
-    success_url = reverse_lazy('student-list') 
+    template_name = "student_edit.html"
+    success_url = reverse_lazy('students-list') 
 
 class StudentDeleteView(DeleteView):
     model = Student
     template_name = "student_del.html"
-    success_url = reverse_lazy('student-list')
+    success_url = reverse_lazy('students-list')
 
 class ProgramList(ListView):
     model = Program
