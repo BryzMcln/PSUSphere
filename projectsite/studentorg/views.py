@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from studentorg.models import Organization, College, Student, Program, OrgMember
-from studentorg.forms import OrganizationForm, CollegesForm, StudentsForm, ProgramForm
+from studentorg.forms import OrganizationForm, CollegesForm, StudentsForm, ProgramForm, OrgMembersForm
 from django.urls import reverse_lazy
 from typing import Any
 from django.db.models import Q
@@ -139,3 +139,35 @@ class ProgramDeleteView(DeleteView):
     model = Program
     template_name = "prog_del.html"
     success_url = reverse_lazy('programs-list')
+
+class OrgMemList(ListView):
+    model = OrgMember
+    context_object_name = 'orgmem'
+    template_name = "orgmem_list.html"
+    paginate_by = 10
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super(OrgMemList, self).get_queryset(*args, **kwargs)
+        if self.request.GET.get("q") != None:
+            query = self.request.GET.get('q')
+            qs = qs.filter(Q(student__lastname__icontains=query) |
+            Q(student__firstname__icontains=query) | 
+            Q(date_joined__icontains=query) | Q(organization__name__icontains=query))
+        return qs
+
+class OrgMemCreateView(CreateView):
+    model = OrgMember
+    form_class = OrgMembersForm
+    template_name = "orgmem_add.html"
+    success_url = reverse_lazy('orgmem-list') 
+    
+class OrgMemUpdateView(UpdateView):
+    model = OrgMember
+    form_class = OrgMembersForm
+    template_name = "orgmem_edit.html"
+    success_url = reverse_lazy('orgmem-list') 
+
+class OrgMemDeleteView(DeleteView):
+    model = OrgMember
+    template_name = "orgmem_del.html"
+    success_url = reverse_lazy('orgmem-list')
