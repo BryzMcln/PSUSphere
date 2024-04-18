@@ -15,7 +15,7 @@
 		<div class="main-header">
 			<div class="logo-header">
 				<a href="index.html" class="logo">
-					Ready Dashboard
+					PSUSPHERE Dashboard
 				</a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -24,7 +24,7 @@
 			</div>
 			<nav class="navbar navbar-header navbar-expand-lg">
 				<div class="container-fluid">
-					
+
 					<form class="navbar-left navbar-form nav-search mr-md-3" action="">
 						<div class="input-group">
 							<input type="text" placeholder="Search ..." class="form-control">
@@ -73,7 +73,7 @@
 												<span class="block">
 													Rahmad commented on Admin
 												</span>
-												<span class="time">12 minutes ago</span> 
+												<span class="time">12 minutes ago</span>
 											</div>
 										</a>
 										<a href="#">
@@ -121,7 +121,10 @@
 									<div class="dropdown-divider"></div>
 									<a class="dropdown-item" href="#"><i class="ti-settings"></i> Account Setting</a>
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-power-off"></i> Logout</a>
+									<form method="post" action="{% url 'logout' %}">
+										{% csrf_token %}
+										<button type="submit" class="btn btn-rounded btn-danger">Logout</button>
+									</form>									
 								</ul>
 								<!-- /.dropdown-user -->
 							</li>
@@ -180,27 +183,27 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="forms.html">
+							<a href="{% url 'orgmem-list' %}">
 								<i class="la la-keyboard-o"></i>
 								<p>Org. Members</p>
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="tables.html">
+							<a href="{% url 'student-list' %}">
 								<i class="la la-th"></i>
 								<p>Student</p>
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="notifications.html">
+							<a href="{% url 'college-list' %}">
 								<i class="la la-bell"></i>
 								<p>College</p>
 							</a>
 						</li>
 						<li class="nav-item active">
-							<a href="typography.html">
+							<a href="{% url 'program-list' %}">
 								<i class="la la-font"></i>
-								<p>Typography</p>
+								<p>Progams</p>
 								<span class="badge badge-danger">25</span>
 							</a>
 						</li>
@@ -234,9 +237,10 @@
 						</nav>
 						<div class="copyright ml-auto">
 							2018, made with <i class="la la-heart heart text-danger"></i> by <a href="http://www.themekita.com">ThemeKita</a>
-						</div>				
+						</div>
 					</div>
 				</footer>
+			</div>
 		</div>
 	</div>
 	<!-- Modal -->
