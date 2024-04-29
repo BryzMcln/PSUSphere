@@ -10,6 +10,12 @@ from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
+from django.db import connection
+from django.http import JsonResponse
+from django.db.models.functions import ExtractMonth
+
+from django.db.models import Count
+from datetime import datetime
 @method_decorator(login_required, name='dispatch')
 class HomePageView(ListView):
     model = Organization
@@ -181,3 +187,17 @@ class ChartView(ListView):
     
     def get_queryset(self, *args, **kwargs):
         pass
+
+def PieCountbySeverity(request):
+    query = ''' SELECT severity_level, COUNT(*) as count FROM fire_incident GROUP BY severity_level '''
+    data = {}
+
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        rows = cursor.fetchall()
+    if rows:
+        # Construct the dictionary with severity level as keys and count as values
+        data = {severity: count for severity, count in rows}
+    else:
+        data = {}
+    return JsonResponse(data)
