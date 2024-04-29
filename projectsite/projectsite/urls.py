@@ -19,6 +19,7 @@ from django.urls import path, re_path
 from studentorg.views import *
 from studentorg import views
 from django.contrib.auth import views as auth_views
+from fire.views import HomePageView, ChartView, PieCountbySeverity
 
 urlpatterns = [
     path("admin/", admin.site.urls),
