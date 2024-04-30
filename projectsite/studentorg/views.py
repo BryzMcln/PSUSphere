@@ -10,6 +10,8 @@ from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
+from .models import Incident
+
 from django.db import connection
 from django.http import JsonResponse
 from django.db.models.functions import ExtractMonth
