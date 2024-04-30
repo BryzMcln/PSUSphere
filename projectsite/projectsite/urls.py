@@ -19,13 +19,15 @@ from django.urls import path, re_path
 from studentorg.views import *
 from studentorg import views
 from django.contrib.auth import views as auth_views
-from studentorg.views import HomePageView, ChartView, PieCountbySeverity, LineCountbyMonth
+from fire.views import HomePageView, ChartView, PieCountbySeverity, LineCountbyMonth, MultilineIncidentTop3Country
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', views.HomePageView.as_view(), name='home'),
     path('dashboard-chart', ChartView.as_view(), name='dashboard-chart'),
     path('chart/', PieCountbySeverity, name='chart'),
+    path('lineChart/', LineCountbyMonth, name='chart'),
+    path('multilineChart/', MultilineIncidentTop3Country, name='chart'),
     path('organization_list', OrganizationList.as_view(), name='organization-list'),
     path('organization_list/add', OrganizationCreateView.as_view(), name='organization-add'),
     path('organization_list/<pk>', OrganizationUpdateView.as_view(), name='organization-update'),
