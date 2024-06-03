@@ -15,8 +15,8 @@
 	<div class="wrapper">
 		<div class="main-header">
 			<div class="logo-header">
-				<a href="index.html" class="logo">
-					PSUSPHERE Dashboard
+				<a href="#" class="logo">
+					PSUSPHERE
 				</a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -112,7 +112,7 @@
 										<div class="u-img"><img src="{% static '/img/profile.jpg' %}" alt="user"></div>
 										<div class="u-text">
 											<h4>Hizrian</h4>
-											<p class="text-muted">hello@themekita.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+											<p class="text-muted">hello@themekita.com</p><a href="#" class="btn btn-rounded btn-primary btn-sm">View Profile</a></div>
 										</div>
 									</li>
 									<div class="dropdown-divider"></div>
@@ -124,7 +124,7 @@
 									<div class="dropdown-divider"></div>
 									<form method="post" action="{% url 'logout' %}">
 										{% csrf_token %}
-										<button type="submit" class="btn btn-rounded btn-danger">Logout</button>
+										<button type="submit" class="btn btn-danger">Logout</button>
 									</form>									
 								</ul>
 								<!-- /.dropdown-user -->
@@ -142,7 +142,7 @@
 						<div class="info">
 							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									Hizrian
+									EmuZy
 									<span class="user-level">Administrator</span>
 									<span class="caret"></span>
 								</span>
@@ -216,9 +216,8 @@
 				</div>
 			</div>
 			<div class="main-panel">
-				{% block content %}
-				{% endblock %}
-			</div>
+			    {% block content %}
+			    {% endblock %}
 				<footer class="footer">
 					<div class="container-fluid">
 						<nav class="pull-left">
@@ -269,6 +268,8 @@
 			</div>
 		</div>
 	</div>
+	{% block chart %}
+    {% endblock %}
 </body>
 <script src="{% static 'js/core/jquery.3.2.1.min.js' %}"></script>
 <script src="{% static 'js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js' %}"></script>
@@ -283,4 +284,5 @@
 <script src="{% static 'js/plugin/chart-circle/circles.min.js' %}"></script>
 <script src="{% static 'js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
 <script src="{% static 'js/ready.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </html>
