@@ -13,6 +13,8 @@ from studentorg.models import Organization, College, Student, Program, OrgMember
 from studentorg.forms import OrganizationForm, CollegesForm, StudentsForm, ProgramForm, OrgMembersForm
 from typing import Any
 
+from django.db.models import *
+from django.db.models.functions import TruncYear
 from datetime import datetime
 
 @method_decorator(login_required, name='dispatch')
@@ -176,3 +178,93 @@ class OrgMemDeleteView(DeleteView):
     model = OrgMember
     template_name = "orgmem_del.html"
     success_url = reverse_lazy('orgmem-list')
+
+class ChartView(ListView):
+    template_name = 'chart.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def get_queryset(self, *args, **kwargs):
+        pass
+
+def StudentViewByProg(request):
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT p.prog_name, COUNT(s.id) as student_count
+            FROM studentorg_program p
+            LEFT JOIN studentorg_student s ON s.program_id = p.id
+            GROUP BY p.prog_name
+        """)
+        data = cursor.fetchall()
+
+    response_data = [{"prog_name": row[0], "student_count": row[1]} for row in data]
+    return JsonResponse(response_data, safe=False)
+
+
+def StudentViewByOrg(request):
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT o.name, COUNT(DISTINCT om.id)
+            FROM studentorg_organization o
+            LEFT JOIN studentorg_orgmember om ON om.organization_id = o.id
+            GROUP BY o.id
+        """)
+        data = cursor.fetchall()
+
+    response_data = [{"name": row[0], "student_count": row[1]} for row in data]
+    return JsonResponse(response_data, safe=False)
+
+
+def GetOrgMembersPerYear(request):
+    members_per_year = OrgMember.objects.annotate(year=TruncYear('date_joined')) \
+                                 .values('year') \
+                                 .annotate(count=Count('id')) \
+                                 .order_by('year') \
+                                 .values('year', 'count')
+
+    data = list(members_per_year)
+    return JsonResponse(data, safe=False)
+
+
+def OrgViewInCollege(request):
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT c.name, COUNT(o.id) AS org_count
+            FROM studentorg_college c
+            LEFT JOIN studentorg_organization o ON o.college_id = c.id
+            GROUP BY c.name
+        """)
+        data = cursor.fetchall()
+
+    response_data = [{"name": row[0], "org_count": row[1]} for row in data]
+    return JsonResponse(response_data, safe=False)
+
+
+def StudentViewByCollege(request):
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT c.name, COUNT(std.id) AS student_count
+            FROM studentorg_college sc
+            LEFT JOIN studentorg_program prg ON prg.college_id = sc.id
+            LEFT JOIN studentorg_student std ON std.program_id = prg.id
+            GROUP BY c.name
+        """)
+        data = cursor.fetchall()
+
+    response_data = [{"name": row[0], "student_count": row[1]} for row in data]
+    return JsonResponse(response_data, safe=False)
+
+
+def StudentViewOrganizationsPerYear(request):
+    org_member_subquery = OrgMember.objects.filter(student_id=OuterRef('pk')).values('student_id')
+
+    students = Student.objects.annotate(
+        has_org=Subquery(org_member_subquery)
+    ).filter(has_org__isnull=True)
+
+    students_per_year = students.annotate(year=TruncYear('created_at')).values('year').annotate(count=Count('id')).order_by('year')
+
+    data = list(students_per_year)
+    return JsonResponse(data, safe=False)
