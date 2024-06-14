@@ -1,20 +1,19 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <div class="content">
   <div class="container-fluid">
-    <h4 class="page-title">Home</h4>
     <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
             <div class="card-title">Charts</div>
-            <div class="card-category">Visualization Charts for PSUSphere</div>
+            <div class="card-category">Creative Charts for PSUSphere</div>
           </div>
         </div>
       </div>
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <div class="card-title">Count of Students per Program</div>
+            <div class="card-title">Number of Students Per Program</div>
           </div>
           <div class="card-body">
             <div
@@ -30,21 +29,6 @@
         </div>
       </div>
 
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">Number of Organizations per College</div>
-          </div>
-          <div class="card-body">
-            <div
-              class="chart-container"
-              style="position: relative; height: 400px"
-            >
-              <canvas id="doughnutChart"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div class="col-md-12">
         <div class="card">
@@ -78,40 +62,6 @@
               style="position: relative; height: 400px"
             >
               <canvas id="barChart" style="width: 100%; height: 100%"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">Number of Students by College</div>
-          </div>
-          <div class="card-body">
-            <div
-              class="chart-container"
-              style="position: relative; height: 550px"
-            >
-              <canvas id="lineChart"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">
-              Number of Students without Organization per Year
-            </div>
-          </div>
-          <div class="card-body">
-            <div
-              class="chart-container"
-              style="position: relative; height: 400px"
-            >
-              <canvas id="lineChart2"></canvas>
             </div>
           </div>
         </div>
@@ -264,195 +214,6 @@
                   },
                 },
               ],
-            },
-          },
-        });
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-    fetch("/organizations_per_college/")
-      .then((response) => response.json())
-      .then((data) => {
-
-        const collegeNames = data.map((item) => item.name);
-        const organizationCounts = data.map((item) => item.org_count);
-
-        const ctx = document.getElementById("doughnutChart").getContext("2d");
-        new Chart(ctx, {
-          type: "doughnut",
-          data: {
-            labels: collegeNames,
-            datasets: [
-              {
-                label: "Number of Organizations",
-                backgroundColor: [
-                  "#FF6384",
-                  "#36A2EB",
-                  "#FFCE56",
-                  "#4BC0C0",
-                  "#9966FF",
-                  "#FF9F40",
-                  "#00CED1",
-                  "#FFBF00",
-                  "#8A2BE2",
-                  "#7FFF00",
-                ],
-                data: organizationCounts,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              title: {
-                display: true,
-                text: "Organizations per College",
-              },
-              legend: {
-                position: "right",
-              },
-            },
-          },
-        });
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-
-    fetch("/student_count_by_college/")
-      .then((response) => response.json())
-      .then((data) => {
-        // Extract the college names and student counts from the data
-        const collegeNames = data.map((item) => item.name);
-        const studentCounts = data.map((item) => item.student_count);
-
-        const ctx = document.getElementById("lineChart").getContext("2d");
-        // Create the line chart
-        new Chart(ctx, {
-          type: "line",
-          data: {
-            labels: collegeNames,
-            datasets: [
-              {
-                label: "Number of Students",
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
-                borderColor: "rgba(75, 192, 192, 1)",
-                data: studentCounts,
-                fill: true,
-                borderWidth: 1,
-                pointBackgroundColor: "rgba(75, 192, 192, 1)",
-                pointBorderColor: "#fff",
-                pointHoverBackgroundColor: "#fff",
-                pointHoverBorderColor: "rgba(75, 192, 192, 1)",
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              x: {
-                title: {
-                  display: true,
-                  text: "College",
-                },
-                ticks: {
-                  autoSkip: true,
-                  maxRotation: 90,
-                  minRotation: 90,
-                },
-              },
-              y: {
-                title: {
-                  display: true,
-                  text: "Number of Students",
-                },
-                ticks: {
-                  beginAtZero: true,
-                  stepSize: 1,
-                },
-              },
-            },
-            plugins: {
-              title: {
-                display: true,
-                text: "Number of Students by College",
-              },
-              legend: {
-                position: "top",
-              },
-            },
-          },
-        });
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-
-    fetch("/students_without_organizations_per_year/")
-      .then((response) => response.json())
-      .then((data) => {
-        // Extract the years and student counts from the data
-        const years = data.map((item) => new Date(item.year).getFullYear());
-        const counts = data.map((item) => item.count);
-
-        const ctx = document.getElementById("lineChart2").getContext("2d");
-        // Create the line chart
-        new Chart(ctx, {
-          type: "line",
-          data: {
-            labels: years,
-            datasets: [
-              {
-                label: "Number of Students without Organization",
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
-                borderColor: "rgba(75, 192, 192, 1)",
-                data: counts,
-                fill: true,
-                borderWidth: 1,
-                pointBackgroundColor: "rgba(75, 192, 192, 1)",
-                pointBorderColor: "#fff",
-                pointHoverBackgroundColor: "#fff",
-                pointHoverBorderColor: "rgba(75, 192, 192, 1)",
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              x: {
-                title: {
-                  display: true,
-                  text: "Year",
-                },
-                ticks: {
-                  autoSkip: true,
-                  maxRotation: 90,
-                  minRotation: 90,
-                },
-              },
-              y: {
-                title: {
-                  display: true,
-                  text: "Number of Students",
-                },
-                ticks: {
-                  beginAtZero: true,
-                  stepSize: 1,
-                },
-              },
-            },
-            plugins: {
-              title: {
-                display: true,
-                text: "Number of Students without Organization per Year",
-              },
-              legend: {
-                position: "top",
-              },
             },
           },
         });

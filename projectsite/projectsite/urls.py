@@ -7,8 +7,7 @@ from studentorg.views import (
     StudentCreateView, StudentUpdateView, StudentDeleteView, ProgramList, 
     ProgramCreateView, ProgramUpdateView, ProgramDeleteView, OrgMemList, 
     OrgMemCreateView, OrgMemUpdateView, OrgMemDeleteView, ChartView,
-    GetOrgMembersPerYear, StudentViewByCollege, StudentViewByOrg, 
-    StudentViewByProg, StudentViewOrganizationsPerYear, OrgViewInCollege
+    GetOrgMembersPerYear, StudentViewByOrg, StudentViewByProg,
 )
 from django.contrib.auth import views as auth_views
 
@@ -24,9 +23,6 @@ urlpatterns = [
     path('student_count_by_program/', StudentViewByProg, name='chart'),
     path('student-distribution-by-organization/', StudentViewByOrg, name='chart'),
     path('org-members-per-year/', GetOrgMembersPerYear, name='chart'),
-    path('organizations_per_college/', OrgViewInCollege, name='chart'),
-    path('student_count_by_college/', StudentViewByCollege, name='chart'),
-    path('students_without_organizations_per_year/', StudentViewOrganizationsPerYear, name='chart'),
 
     # Organization URLs
     path('organization_list', OrganizationList.as_view(), name='organization-list'),
